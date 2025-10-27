@@ -1,39 +1,41 @@
 # Cloudflare Zero Trust Tunnel - Terraform Module
+This Terraform module creates and manages a Cloudflare Zero Trust Cloudflared Tunnel, enabling secure connections between your infrastructure and Cloudflare's edge network.
 
-This module creates a Cloudflare Zero Trust Cloudflared Tunnel.
+## Features
+- Cloudflare Zero Trust tunnel creation
+- Secure tunnel configuration with secret management
+- Integration with Cloudflare account
+- Automated tunnel provisioning and management
 
-## Inputs
-- `cloudflare_account_id` (string, required): Cloudflare account ID.
-- `tunnel_name` (string, required): Name of the tunnel to create.
-- `tunnel_secret` (string, required, sensitive): Tunnel secret.
-
-## Outputs
-- `tunnel_id`: The ID of the created tunnel.
-
-## Requirements
-- Terraform >= 1.0
-- Provider `cloudflare` ~> 5.0
-
-## Usage (Git source)
+## Usage
 ```hcl
-module "zt_tunnel" {
-  source = "git::ssh://git@your.git.server/your-org/your-repo.git//cloudflare/zero-trust/tunnel?ref=v0.1.0"
+module "cloudflare_tunnel" {
+  source = "github.com/Eichinosho/terraform-modules//cloudflare/zero-trust/tunnel"
 
-  cloudflare_account_id = var.cloudflare_account_id
-  tunnel_name           = "my-tunnel"
-  tunnel_secret         = var.tunnel_secret
+  cloudflare_account_id = "your-account-id"
+  tunnel_name          = "my-secure-tunnel"
+  tunnel_secret        = var.tunnel_secret
 }
 ```
 
-## Notes for Terraform Registry publication
-To publish to the Terraform Registry, ensure:
-- The repository is named following the pattern `terraform-<PROVIDER>-<NAME>` or for multi-provider modules a generic name is fine.
-- This module lives at the repo root or within a subdirectory; if using subdirectory, the registry will index it if you add a `modules` folder or use the standard layout.
-- Add these docs files at the module root: `README.md` (this file), optionally `LICENSE`, `CHANGELOG.md`, `examples/` with a working example.
-- Consider adding `versions.tf` with `required_version` and `required_providers` (already present), and outputs/variables documented.
+## Requirements
+| Name | Version |
+|------|---------|
+| terraform | >= 1.0 |
+| cloudflare | ~> 5.0 |
 
-### Example configuration
-See `examples/basic` for a minimal usage example.
+## Inputs
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| cloudflare_account_id | Cloudflare account ID | `string` | n/a | yes |
+| tunnel_name | Name of the tunnel to create | `string` | n/a | yes |
+| tunnel_secret | Secret for tunnel authentication (sensitive) | `string` | n/a | yes |
+
+## Outputs
+| Name | Description |
+|------|-------------|
+| tunnel_id | The ID of the created tunnel |
+
 
 ## License
 Copyright (c) 2025 Eichinosho
